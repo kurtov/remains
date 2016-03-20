@@ -44,6 +44,14 @@ public class RemainsService {
         setValueToZeroIfNotContainsInSet(remainsSet);
     }
     
+    public Optional<Remains> findByGoodsName(String goodsName) {
+        return remainsDAO.findByGoodsName(goodsName);
+    }
+
+    public void update(Remains remains) {
+        remainsDAO.update(remains);
+    }
+    
     private Set<Remains> xml2remainsSet(Document document) {
         Set<Remains> remainsSet = new HashSet<>();
         NodeList nodeList = document.getDocumentElement().getChildNodes();

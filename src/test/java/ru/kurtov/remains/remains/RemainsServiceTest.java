@@ -1,4 +1,4 @@
-package ru.kurtov.remains;
+package ru.kurtov.remains.remains;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,11 +9,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
-import static ru.kurtov.remains.DBTestBase.database;
-import ru.kurtov.remains.remains.Remains;
-import ru.kurtov.remains.remains.RemainsDAO;
-import ru.kurtov.remains.remains.RemainsService;
-import ru.kurtov.remains.remains.RemainsSpringJDBCDAO;
+import ru.kurtov.remains.DBTestBase;
 
 public class RemainsServiceTest extends DBTestBase{
     private static final RemainsService service = new RemainsService(database);

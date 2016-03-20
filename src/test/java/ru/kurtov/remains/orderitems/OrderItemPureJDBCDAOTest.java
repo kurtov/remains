@@ -1,9 +1,6 @@
-package ru.kurtov.remains;
+package ru.kurtov.remains.orderitems;
 
-import ru.kurtov.remains.orderitems.OrderItemDAO;
-import ru.kurtov.remains.orderitems.OrderItemPureJDBCDAO;
-
-public class OrderItemPureJDBCDAOTest extends OrderItemAbstractDAOTest { //DBTestBase {   
+public class OrderItemPureJDBCDAOTest extends OrderItemAbstractDAOTest {
     private static final OrderItemDAO orderItemDAO = new OrderItemPureJDBCDAO(database);
 
     @Override

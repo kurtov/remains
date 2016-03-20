@@ -1,4 +1,4 @@
-package ru.kurtov.remains;
+package ru.kurtov.remains.orderitems;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -8,8 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-import ru.kurtov.remains.orderitems.OrderItem;
-import ru.kurtov.remains.orderitems.OrderItemDAO;
+import ru.kurtov.remains.DBTestBase;
 
 public abstract class OrderItemAbstractDAOTest extends DBTestBase {
 

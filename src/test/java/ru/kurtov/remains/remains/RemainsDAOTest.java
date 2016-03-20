@@ -1,4 +1,4 @@
-package ru.kurtov.remains;
+package ru.kurtov.remains.remains;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import ru.kurtov.remains.DBTestBase;
 import ru.kurtov.remains.remains.Remains;
 import ru.kurtov.remains.remains.RemainsDAO;
 import ru.kurtov.remains.remains.RemainsSpringJDBCDAO;
