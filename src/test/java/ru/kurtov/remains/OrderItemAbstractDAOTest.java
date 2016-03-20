@@ -10,42 +10,53 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import ru.kurtov.remains.orderitems.OrderItem;
 import ru.kurtov.remains.orderitems.OrderItemDAO;
-import ru.kurtov.remains.orderitems.OrderItemPureJDBCDAO;
 
-public class OrderItemDAOTest extends DBTestBase {   
-    private static final OrderItemDAO orderItemDAO = new OrderItemPureJDBCDAO(database);
+public abstract class OrderItemAbstractDAOTest extends DBTestBase {
 
-    
+    protected abstract OrderItemDAO orderItemDAO();
+
+    //Поскольку OrderItemDAO реализовано двумя способами, один из каоторых
+    //Hibernate, а Hibernate когда инсертит данные повторно их не селектит.
+    //Приходится коммитить.
+    //Для PureJDCB значения не имеет
+    protected abstract void commit();
+
     @Test
     public void insertShouldInsertNewOrderItemInDBAndReturnOrderItemWithAssignedId() throws Exception {
         final OrderItem orderItem1 = OrderItem.create(1, "Селедочка", 10);
         final OrderItem orderItem2 = OrderItem.create(1, "Грибочки", 2);
 
-        orderItemDAO.insert(orderItem1);
-        orderItemDAO.insert(orderItem2);
+        orderItemDAO().insert(orderItem1);
+        orderItemDAO().insert(orderItem2);
+        
+        commit();
 
-        final OrderItem orderItem1FromDB = orderItemDAO.get(orderItem1.getId()).get();
+        final OrderItem orderItem1FromDB = orderItemDAO().get(orderItem1.getId()).get();
         assertEquals(orderItem1, orderItem1FromDB);
 
-        final OrderItem orderItem2FromDB = orderItemDAO.get(orderItem2.getId()).get();
+        final OrderItem orderItem2FromDB = orderItemDAO().get(orderItem2.getId()).get();
         assertEquals(orderItem2, orderItem2FromDB);
     }
+
+    
 
 
     @Test(expected = IllegalArgumentException.class)
     public void insertShouldThrowIllegalArgumentExceptionIfOrderItemHasId() throws Exception {
         final OrderItem orderItem = OrderItem.existing(1, 1, "Селедочка", 10);
 
-        orderItemDAO.insert(orderItem);
+        orderItemDAO().insert(orderItem);
     }
 
-    
+   
     @Test
     public void getShouldReturnOrderItem() throws Exception {
         final OrderItem orderItem = OrderItem.create(1, "Селедочка", 10);
-        orderItemDAO.insert(orderItem);
+        orderItemDAO().insert(orderItem);
 
-        final Optional<OrderItem> orderItemFromDB = orderItemDAO.get(orderItem.getId());
+        commit();
+        
+        final Optional<OrderItem> orderItemFromDB = orderItemDAO().get(orderItem.getId());
 
         assertEquals(orderItem, orderItemFromDB.get());
     }
@@ -55,22 +66,24 @@ public class OrderItemDAOTest extends DBTestBase {
     public void getShouldReturnEmptyOptionalIfNoOrderItemWithSuchId() throws Exception {
         final int nonExistentId = 666;
 
-        final Optional<OrderItem> orderItemFromDB = orderItemDAO.get(nonExistentId);
+        final Optional<OrderItem> orderItemFromDB = orderItemDAO().get(nonExistentId);
 
         assertFalse(orderItemFromDB.isPresent());
     }
 
     @Test
     public void getAllShouldReturnAllOrderItems() throws Exception {
-        assertTrue(orderItemDAO.getAll().isEmpty());
+        assertTrue(orderItemDAO().getAll().isEmpty());
 
         final OrderItem orderItem1 = OrderItem.create(1, "Селедочка", 10);
         final OrderItem orderItem2 = OrderItem.create(1, "Грибочки", 2);
 
-        orderItemDAO.insert(orderItem1);
-        orderItemDAO.insert(orderItem2);
+        orderItemDAO().insert(orderItem1);
+        orderItemDAO().insert(orderItem2);
+        
+        commit();
 
-        final Set<OrderItem> orderItemFromDB = orderItemDAO.getAll();
+        final Set<OrderItem> orderItemFromDB = orderItemDAO().getAll();
 
         assertEquals(new HashSet<>(Arrays.asList(orderItem1, orderItem2)), orderItemFromDB);
     }
@@ -78,13 +91,15 @@ public class OrderItemDAOTest extends DBTestBase {
     @Test
     public void updateShouldUpdateOrderItem() throws Exception {
         final OrderItem orderItem = OrderItem.create(1, "Селедочка", 10);
-        orderItemDAO.insert(orderItem);
+        orderItemDAO().insert(orderItem);
+        
+        commit();
         
         orderItem.setValue(30);
 
-        orderItemDAO.update(orderItem);
+        orderItemDAO().update(orderItem);
 
-        final OrderItem orderItemFromDB = orderItemDAO.get(orderItem.getId()).get();
+        final OrderItem orderItemFromDB = orderItemDAO().get(orderItem.getId()).get();
         assertEquals(orderItem, orderItemFromDB);
     }
 
@@ -94,13 +109,14 @@ public class OrderItemDAOTest extends DBTestBase {
         final OrderItem orderItem1 = OrderItem.create(1, "Селедочка", 10);
         final OrderItem orderItem2 = OrderItem.create(1, "Грибочки", 2);
 
-        orderItemDAO.insert(orderItem1);
-        orderItemDAO.insert(orderItem2);
+        orderItemDAO().insert(orderItem1);
+        orderItemDAO().insert(orderItem2);
+        
+        commit();
 
+        orderItemDAO().delete(orderItem1.getId());
 
-        orderItemDAO.delete(orderItem1.getId());
-
-        assertFalse(orderItemDAO.get(orderItem1.getId()).isPresent());
-        assertTrue(orderItemDAO.get(orderItem2.getId()).isPresent());
+        assertFalse(orderItemDAO().get(orderItem1.getId()).isPresent());
+        assertTrue(orderItemDAO().get(orderItem2.getId()).isPresent());
     }
 }

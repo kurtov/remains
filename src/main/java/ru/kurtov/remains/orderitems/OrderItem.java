@@ -1,11 +1,29 @@
 package ru.kurtov.remains.orderitems;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "order_items")
 public class OrderItem {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+    
+    @Column(name = "order_id")
     private int orderId;
+    
+    @Column(name = "goods_name")
     private String goodsName;
+    
+    @Column(name = "value")
     private int value;
 
     public static OrderItem create(final int orderId, final String goodsName, final int value) {
@@ -22,7 +40,16 @@ public class OrderItem {
         this.goodsName = goodsName;
         this.value = value;
     }
+    
+    public OrderItem(final int orderId, final String goodsName, final int value) {
+        this.orderId = orderId;
+        this.goodsName = goodsName;
+        this.value = value;        
+    }
    
+    //Для Hibernate
+    OrderItem() {} 
+    
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
@@ -54,7 +81,7 @@ public class OrderItem {
         }
         return true;
     }
-
+    
     public Integer getId() {
         return id;
     }
