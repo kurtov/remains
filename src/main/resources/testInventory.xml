@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Remains>
+    <Remain>
+        <GoodsName>Грибочки</GoodsName>
+        <Value>100</Value>
+    </Remain>
+    <Remain>
+        <GoodsName>Селедочка</GoodsName>
+        <Value>200</Value>
+    </Remain>
+</Remains>

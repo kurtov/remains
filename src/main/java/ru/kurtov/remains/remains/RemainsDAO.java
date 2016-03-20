@@ -2,7 +2,6 @@ package ru.kurtov.remains.remains;
 
 import java.util.Optional;
 import java.util.Set;
-import ru.kurtov.remains.orderitems.OrderItem;
 
 public interface RemainsDAO {
 
@@ -15,4 +14,6 @@ public interface RemainsDAO {
     void update(Remains remains);
 
     void delete(int remainsId);
+    
+    Optional<Remains> findByGoodsName(String goodsName);
 }

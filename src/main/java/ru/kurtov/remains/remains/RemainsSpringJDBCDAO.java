@@ -44,7 +44,6 @@ public class RemainsSpringJDBCDAO implements RemainsDAO{
 
     @Override
     public Optional<Remains> get(final int remainsId) {
-
         final String query = "SELECT id, goods_name, value FROM remains WHERE id = :id";
 
         final Map<String, Object> params = new HashMap<>();
@@ -95,6 +94,22 @@ public class RemainsSpringJDBCDAO implements RemainsDAO{
         namedParameterJdbcTemplate.update(query, params);
     }
 
+    @Override
+    public Optional<Remains> findByGoodsName(String goodsName) {
+        final String query = "SELECT id, goods_name, value FROM remains WHERE goods_name = :goods_name";
+
+        final Map<String, Object> params = new HashMap<>();
+        params.put("goods_name", goodsName);
+
+        final Remains remains;
+        try {
+            remains = namedParameterJdbcTemplate.queryForObject(query, params, rowToRemains);
+        } catch (final EmptyResultDataAccessException ignored) {
+            return Optional.empty();
+        }
+        return Optional.of(remains);
+    }
+    
     private static final RowMapper<Remains> rowToRemains = (resultSet, rowNum) ->
         Remains.existing(
             resultSet.getInt("id"),

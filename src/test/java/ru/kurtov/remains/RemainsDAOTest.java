@@ -49,6 +49,16 @@ public class RemainsDAOTest extends DBTestBase{
 
         assertEquals(remains, remainsFromDB.get());
     }
+    
+    @Test
+    public void findByNameShouldReturnRemains() throws Exception {
+        final Remains remains = Remains.create("Селедочка", 100);
+        remainsDAO.insert(remains);
+
+        final Optional<Remains> remainsFromDB = remainsDAO.findByGoodsName(remains.getGoodsName());
+
+        assertEquals(remains, remainsFromDB.get());
+    }
 
 
     @Test
