@@ -11,9 +11,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RemainsSpringJDBCDAO implements RemainsDAO{
-  
+    private static final Logger log = LoggerFactory.getLogger(RemainsSpringJDBCDAO.class);
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final SimpleJdbcInsert simpleJdbcInsert;
@@ -28,6 +30,8 @@ public class RemainsSpringJDBCDAO implements RemainsDAO{
 
     @Override
     public void insert(final Remains remains) {
+        log.debug("{} insert: {}", getClass().getSimpleName(), remains);
+        
         if (remains.getId() != null) {
             throw new IllegalArgumentException("can not insert " + remains + " with already assigned id");
         }
@@ -44,6 +48,7 @@ public class RemainsSpringJDBCDAO implements RemainsDAO{
 
     @Override
     public Optional<Remains> get(final int remainsId) {
+        log.debug("{} get: {}", getClass().getSimpleName(), remainsId);
         final String query = "SELECT id, goods_name, value FROM remains WHERE id = :id";
 
         final Map<String, Object> params = new HashMap<>();
@@ -60,7 +65,8 @@ public class RemainsSpringJDBCDAO implements RemainsDAO{
 
     @Override
     public Set<Remains> getAll() {
-
+        log.debug("{} getAll", getClass().getSimpleName());
+        
         final String query = "SELECT id, goods_name, value FROM remains";
 
         return new HashSet<>(jdbcTemplate.query(query, rowToRemains));
@@ -68,6 +74,7 @@ public class RemainsSpringJDBCDAO implements RemainsDAO{
 
     @Override
     public void update(final Remains remains) {
+        log.debug("{} update", getClass().getSimpleName(), remains);
 
         if (remains.getId() == null) {
             throw new IllegalArgumentException("can not update " + remains + " without id");
@@ -85,7 +92,8 @@ public class RemainsSpringJDBCDAO implements RemainsDAO{
 
     @Override
     public void delete(final int remainsId) {
-
+        log.debug("{} delete {}", getClass().getSimpleName(), remainsId);
+        
         final String query = "DELETE FROM remains WHERE id = :id";
 
         final Map<String, Object> params = new HashMap<>();
@@ -96,6 +104,8 @@ public class RemainsSpringJDBCDAO implements RemainsDAO{
 
     @Override
     public Optional<Remains> findByGoodsName(String goodsName) {
+        log.debug("{} findByGoodsName: {}", getClass().getSimpleName(), goodsName);
+        
         final String query = "SELECT id, goods_name, value FROM remains WHERE goods_name = :goods_name";
 
         final Map<String, Object> params = new HashMap<>();

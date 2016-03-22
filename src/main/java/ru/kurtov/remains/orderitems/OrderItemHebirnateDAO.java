@@ -8,10 +8,13 @@ import java.util.Set;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OrderItemHebirnateDAO implements OrderItemDAO {
-
+    private static final Logger log = LoggerFactory.getLogger(OrderItemService.class);
     private final SessionFactory sessionFactory;
+    
 
     public OrderItemHebirnateDAO(final SessionFactory sessionFactory) {
         this.sessionFactory = requireNonNull(sessionFactory);
@@ -19,6 +22,7 @@ public class OrderItemHebirnateDAO implements OrderItemDAO {
 
     @Override
     public void insert(final OrderItem orderItem) {
+        log.debug("{} insert: {}", getClass().getSimpleName(), orderItem);
         if (orderItem.getId() != null) {
             throw new IllegalArgumentException("can not save " + orderItem + " with assigned id");
         }
@@ -27,6 +31,7 @@ public class OrderItemHebirnateDAO implements OrderItemDAO {
 
     @Override
     public Optional<OrderItem> get(final int orderItemId) {
+        log.debug("{} get: {}", getClass().getSimpleName(), orderItemId);
         final OrderItem orderItem = (OrderItem) session().get(OrderItem.class, orderItemId);
     
         return Optional.ofNullable(orderItem);
@@ -34,6 +39,7 @@ public class OrderItemHebirnateDAO implements OrderItemDAO {
 
     @Override
     public Set<OrderItem> getAll() {
+        log.debug("{} getAll", getClass().getSimpleName());
         final Criteria criteria = session().createCriteria(OrderItem.class);
         final List<OrderItem> orderItems = criteria.list();
 
@@ -42,11 +48,13 @@ public class OrderItemHebirnateDAO implements OrderItemDAO {
 
     @Override
     public void update(final OrderItem orderItem) {
+        log.debug("{} update: {}", getClass().getSimpleName(), orderItem);
         session().update(orderItem);
     }
 
     @Override
     public void delete(final int orderItemId) {
+        log.debug("{} delete: {}", getClass().getSimpleName(), orderItemId);
         session().createQuery("DELETE OrderItem WHERE id = :id")
             .setInteger("id", orderItemId)
             .executeUpdate();

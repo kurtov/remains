@@ -113,4 +113,12 @@ public class OrderItem {
     public void setValue(int value) {
         this.value = value;
     }
+    
+    @Override
+    public String toString() {
+        return String.format(
+                "%s{id=%d, orderId='%d', goodsName='%s', value='%d'}",
+                getClass().getSimpleName(), id, orderId, goodsName, value
+        );
+    }
 }

@@ -70,4 +70,12 @@ public class Remains {
         }
         return true;
     }
+    
+    @Override
+    public String toString() {
+        return String.format(
+                "%s{id=%d, goodsName='%s', value='%d'}",
+                getClass().getSimpleName(), id, goodsName, value
+        );
+    }
 }
