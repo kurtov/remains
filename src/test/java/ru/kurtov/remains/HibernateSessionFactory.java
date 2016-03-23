@@ -9,14 +9,12 @@ public class HibernateSessionFactory {
     }
 
     private static Configuration hibernateTestConfig() {
+        
+        //Подтягиваются настройки из src/main/resources/hebirnate.properties
         return HibernateConfigFactory.prod()
             .setProperty("hibernate.connection.driver_class", "org.h2.Driver")
-             //Так называется БД, созданная в DBTestBase
             .setProperty("hibernate.connection.url", "jdbc:h2:mem:testdb")
-            .setProperty("hibernate.current_session_context_class", "thread")
             .setProperty("hibernate.connection.username", "sa")
-            .setProperty("hibernate.connection.password", "")
-            .setProperty("hibernate.show_sql", "true")
-            .setProperty("hibernate.format_sql", "true");        
+            .setProperty("hibernate.connection.password", "");        
     }
 }

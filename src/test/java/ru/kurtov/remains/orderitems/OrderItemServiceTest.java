@@ -14,12 +14,13 @@ import ru.kurtov.remains.remains.RemainsService;
 
 public class OrderItemServiceTest extends DBTestBase {
 
-    protected static final SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
+    private static final RemainsService remainsService = getBean(RemainsService.class);
+    private static final SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
     private static final OrderItemDAO orderItemDAO = new OrderItemHebirnateDAO(sessionFactory);
     private static final OrderItemService orderItemService = 
-            new OrderItemService(sessionFactory, orderItemDAO, new RemainsService(database));
+            new OrderItemService(sessionFactory, orderItemDAO, remainsService);
     
-    private static final RemainsService remainsService = new RemainsService(database);
+
 
     @Test
     public void InsertOrderItemShouldReduceRemainsIfRemainsEnough() throws Exception {

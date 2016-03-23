@@ -19,9 +19,9 @@ import org.xml.sax.SAXException;
 public class RemainsService {
     
     private final RemainsDAO remainsDAO;
-    
-    public RemainsService(DataSource dataSource) {
-        this.remainsDAO = new RemainsSpringJDBCDAO(dataSource); //TODO: IoC
+
+    public RemainsService(RemainsDAO remainsDAO) {
+        this.remainsDAO = remainsDAO;
     }
     
     public void doInventory(InputStream xml) throws SAXException, IOException, ParserConfigurationException {

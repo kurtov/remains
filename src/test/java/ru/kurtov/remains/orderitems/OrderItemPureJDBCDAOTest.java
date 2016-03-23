@@ -1,7 +1,7 @@
 package ru.kurtov.remains.orderitems;
 
 public class OrderItemPureJDBCDAOTest extends OrderItemAbstractDAOTest {
-    private static final OrderItemDAO orderItemDAO = new OrderItemPureJDBCDAO(database);
+    private static final OrderItemDAO orderItemDAO = getBean(OrderItemPureJDBCDAO.class);
 
     @Override
     protected OrderItemDAO orderItemDAO() {

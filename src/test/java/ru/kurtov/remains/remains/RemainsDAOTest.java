@@ -9,12 +9,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import ru.kurtov.remains.DBTestBase;
-import ru.kurtov.remains.remains.Remains;
-import ru.kurtov.remains.remains.RemainsDAO;
-import ru.kurtov.remains.remains.RemainsSpringJDBCDAO;
 
 public class RemainsDAOTest extends DBTestBase{
-    private static final RemainsDAO remainsDAO = new RemainsSpringJDBCDAO(database);
+    private static final RemainsDAO remainsDAO = getBean(RemainsSpringJDBCDAO.class);
 
     
     @Test

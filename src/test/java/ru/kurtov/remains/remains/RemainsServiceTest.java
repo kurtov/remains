@@ -12,9 +12,11 @@ import org.xml.sax.SAXException;
 import ru.kurtov.remains.DBTestBase;
 
 public class RemainsServiceTest extends DBTestBase{
-    private static final RemainsService service = new RemainsService(database);
-    private static final RemainsDAO remainsDAO = new RemainsSpringJDBCDAO(database);
-
+    
+    private static final RemainsDAO remainsDAO = getBean(RemainsSpringJDBCDAO.class);
+    private static final RemainsService service = getBean(RemainsService.class);
+    
+    
     @Before
     public void setUp() {
         remainsDAO.insert(Remains.create("Грибочки", 200));

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="ru.kurtov.remains.remains.RemainsService">
+        <constructor-arg ref="remainsDAO"/>
+    </bean>
+
+    <bean id="remainsDAO" class="ru.kurtov.remains.remains.RemainsSpringJDBCDAO">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean class="ru.kurtov.remains.orderitems.OrderItemPureJDBCDAO">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+</beans>
