@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean class="ru.kurtov.remains.remains.RemainsService">
+    <bean id="remainsService" class="ru.kurtov.remains.remains.RemainsService">
         <constructor-arg ref="remainsDAO"/>
     </bean>
 
@@ -16,4 +16,14 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
+    <bean id="orderItemHebirnateDAO" class="ru.kurtov.remains.orderitems.OrderItemHebirnateDAO">
+        <constructor-arg ref="sessionFactory"/>
+    </bean>
+
+    <bean class="ru.kurtov.remains.orderitems.OrderItemService">
+        <constructor-arg ref="sessionFactory"/> 
+        <constructor-arg ref="orderItemHebirnateDAO"/>
+        <constructor-arg ref="remainsService"/>
+    </bean>
+   
 </beans>

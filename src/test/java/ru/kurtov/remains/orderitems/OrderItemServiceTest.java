@@ -8,17 +8,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import ru.kurtov.remains.DBTestBase;
-import ru.kurtov.remains.HibernateSessionFactory;
 import ru.kurtov.remains.remains.Remains;
 import ru.kurtov.remains.remains.RemainsService;
 
 public class OrderItemServiceTest extends DBTestBase {
 
     private static final RemainsService remainsService = getBean(RemainsService.class);
-    private static final SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
-    private static final OrderItemDAO orderItemDAO = new OrderItemHebirnateDAO(sessionFactory);
-    private static final OrderItemService orderItemService = 
-            new OrderItemService(sessionFactory, orderItemDAO, remainsService);
+    private static final SessionFactory sessionFactory = getBean(SessionFactory.class);
+    private static final OrderItemDAO orderItemDAO = getBean(OrderItemHebirnateDAO.class);
+    private static final OrderItemService orderItemService = getBean(OrderItemService.class);
     
 
 

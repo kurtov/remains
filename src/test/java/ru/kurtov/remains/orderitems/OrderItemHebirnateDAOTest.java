@@ -4,12 +4,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
-import ru.kurtov.remains.HibernateSessionFactory;
 
 public class OrderItemHebirnateDAOTest extends OrderItemAbstractDAOTest {
 
-    private static final SessionFactory sessionFactory = HibernateSessionFactory.getSessionFactory();
-    private static final OrderItemDAO orderItemDAO = new OrderItemHebirnateDAO(sessionFactory);
+    private static final SessionFactory sessionFactory = getBean(SessionFactory.class);
+    private static final OrderItemDAO orderItemDAO = getBean(OrderItemHebirnateDAO.class);
     private Transaction transaction;
    
     @Override

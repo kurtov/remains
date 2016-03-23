@@ -8,7 +8,12 @@
           class="ru.kurtov.remains.DBTestBase"
           factory-method="createEmbeddedDatabase"
           destroy-method="shutdown"/>
-
+    
+    <bean id="sessionFactory"
+          class="ru.kurtov.remains.HibernateSessionFactory"
+          factory-method="getSessionFactory"/>
+    
+    
     <import resource="common-beans.xml"/>
 
 </beans>
