@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="settings" class="ru.hh.diexample.settings.Settings">
+        <constructor-arg>
+            <!-- instantiation using factory method -->
+            <bean class="com.typesafe.config.ConfigFactory" factory-method="load" />
+            <!-- notice class=value -->
+        </constructor-arg>
+    </bean>
+
+    <bean id="sessionFactory"
+          class="ru.kurtov.remains.HibernateConfigFactory"
+          factory-method="getSessionFactory"/>
+
+    <bean id="dataSource" class="org.postgresql.ds.PGSimpleDataSource">
+        <property name="url">
+            <bean factory-bean="settings" factory-method="databaseUrl"/>
+        </property>
+        <property name="user">
+            <bean factory-bean="settings" factory-method="databaseUser"/>
+        </property>
+        <property name="password">
+            <bean factory-bean="settings" factory-method="databasePassword"/>
+        </property>
+    </bean>
+
+    <import resource="common-beans.xml" />
+
+</beans>

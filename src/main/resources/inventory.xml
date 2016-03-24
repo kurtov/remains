@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Remains>
+    <Remain>
+        <GoodsName>Грибочки</GoodsName>
+        <Value>100</Value>
+    </Remain>
+    <Remain>
+        <GoodsName>Селедочка</GoodsName>
+        <Value>200</Value>
+    </Remain>
+    <Remain>
+        <GoodsName>Огурчики</GoodsName>
+        <Value>100</Value>
+    </Remain>    
+    <Remain>
+        <GoodsName>Макарошки</GoodsName>
+        <Value>333</Value>
+    </Remain>
+    <Remain>
+        <GoodsName>Сухарики</GoodsName>
+        <Value>0</Value>
+    </Remain>
+</Remains>
